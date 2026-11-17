@@ -1,0 +1,32 @@
+create or replace NONEDITIONABLE TRIGGER trg_calcul_salariu
+BEFORE INSERT OR UPDATE ON Angajati
+FOR EACH ROW
+DECLARE
+    v_cas_pct NUMBER;
+    v_cass_pct NUMBER;
+    v_imp_pct NUMBER;
+BEGIN
+    -- Extragem procentele curente din tabela Setari
+    SELECT CAS, CASS, IMPOZIT
+    INTO v_cas_pct, v_cass_pct, v_imp_pct
+    FROM Setari
+    WHERE ID = 1;
+
+    -- Formulele de calcul conform cerintelor
+    :NEW.TOTAL_BRUT := :NEW.SALAR_BAZA * (1 + NVL(:NEW.SPOR, 0) / 100) + NVL(:NEW.PREMII_BRUTE, 0);
+    :NEW.CAS := ROUND(:NEW.TOTAL_BRUT * (v_cas_pct / 100));
+    :NEW.CASS := ROUND(:NEW.TOTAL_BRUT * (v_cass_pct / 100));
+    :NEW.BRUT_IMPOZABIL := :NEW.TOTAL_BRUT - :NEW.CAS - :NEW.CASS;
+    :NEW.IMPOZIT := ROUND(:NEW.BRUT_IMPOZABIL * (v_imp_pct / 100));
+    :NEW.VIRAT_CARD := :NEW.TOTAL_BRUT - :NEW.CAS - :NEW.CASS - :NEW.IMPOZIT - NVL(:NEW.RETINERI, 0);
+END;
+/
+
+create or replace NONEDITIONABLE TRIGGER trg_recalculare_dupa_procente
+AFTER UPDATE ON Setari
+BEGIN
+    -- O simpla atingerii a randurilor va declansa trigger-ul trg_calcul_salariu pentru toti angajatii
+    UPDATE Angajati
+    SET SALAR_BAZA = SALAR_BAZA;
+END;
+/

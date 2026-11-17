@@ -1,0 +1,13 @@
+-- Inserare angajati noi in tabela ANGAJATI, incluzand coloana RETINERI
+
+INSERT INTO ANGAJATI (NUME, PRENUME, FUNCTIE, SALAR_BAZA, SPOR, PREMII_BRUTE, RETINERI) 
+VALUES ('Vasilescu', 'Cristian', 'Programator', 9500, 10, 500, 0);
+
+INSERT INTO ANGAJATI (NUME, PRENUME, FUNCTIE, SALAR_BAZA, SPOR, PREMII_BRUTE, RETINERI) 
+VALUES ('Marinescu', 'Ioana', 'Manager', 12000, 15, 1000, 250);
+
+INSERT INTO ANGAJATI (NUME, PRENUME, FUNCTIE, SALAR_BAZA, SPOR, PREMII_BRUTE, RETINERI) 
+VALUES ('Dumitru', 'Alexandru', 'Tester', 6000, 5, 200, 0);
+
+-- Salvarea modificarilor în baza de date
+COMMIT;

@@ -1,0 +1,10 @@
+.vs/
+bin/
+obj/
+*.user
+*.suo
+proiect1/WebApplication1/Web.config
+proiect1/WebApplication1/Web.Debug.config
+proiect1/WebApplication1/Web.Release.config
+tabele_init.sql.txt
+proiect1/packages/

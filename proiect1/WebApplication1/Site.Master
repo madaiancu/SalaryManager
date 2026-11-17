@@ -1,0 +1,356 @@
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebApplication1.Site" %>
+
+<!DOCTYPE html>
+<html lang="ro">
+<head runat="server">
+    <title>SalaryManager - Sistem de gestiune a salariilor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #edf3f8;
+            color: #142d4e;
+        }
+
+        .header {
+            background: linear-gradient(120deg, #142d4e, #1d456b);
+            color: white;
+            padding: 24px 35px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-icon {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #24bac4;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.08);
+            font-size: 30px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand h1 span {
+            color: #32c6cf;
+        }
+
+        .brand p {
+            margin: 5px 0 0;
+            color: #d2e5f0;
+            font-size: 14px;
+        }
+
+        .header-widgets {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .clock-panel {
+            display: inline-block;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 12px;
+            padding: 13px 18px;
+            color: white;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .banner-img {
+            width: 110px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-left: 10px;
+            vertical-align: middle;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #102744;
+            padding: 8px 25px;
+            gap: 8px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .menu > a,
+        .dropdown .dropbtn {
+            display: inline-block;
+            color: #f5f9ff;
+            text-decoration: none;
+            padding: 13px 19px;
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .menu > a:hover,
+        .dropdown:hover .dropbtn,
+        .dropdown:focus-within .dropbtn {
+            background: #0d9ba8;
+            color: white;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            padding: 7px;
+            box-shadow: 0 10px 30px rgba(10,30,55,0.18);
+            z-index: 100;
+        }
+
+        .dropdown-content a {
+            display: block;
+            color: #142d4e;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .dropdown-content a:hover {
+            background: #e7f7f8;
+            color: #087f8a;
+        }
+
+        .dropdown:hover .dropdown-content,
+        .dropdown:focus-within .dropdown-content {
+            display: block;
+        }
+
+        .content {
+            background: white;
+            margin: 25px auto;
+            padding: 30px;
+            width: calc(100% - 50px);
+            max-width: 1700px;
+            min-height: 500px;
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(18,45,75,0.07);
+            overflow-x: auto;
+        }
+
+        .content h1,
+        .content h2 {
+            color: #142d4e;
+        }
+
+        .content input[type="text"],
+        .content input[type="password"],
+        .content input[type="number"],
+        .content select {
+            border: 1px solid #cbd7e2;
+            border-radius: 7px;
+            padding: 9px 11px;
+            font-family: inherit;
+        }
+
+        .content input:focus,
+        .content select:focus {
+            outline: 2px solid #8edce1;
+            border-color: #0d9ba8;
+        }
+
+        .content input[type="submit"],
+        .content input[type="button"],
+        .content button {
+            background: #142d4e;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 17px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .content input[type="submit"]:hover,
+        .content input[type="button"]:hover,
+        .content button:hover {
+            background: #0d9ba8;
+        }
+
+        @media (max-width: 850px) {
+            .header {
+                padding: 20px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .menu {
+                padding: 8px;
+            }
+
+            .content {
+                width: calc(100% - 20px);
+                margin: 10px;
+                padding: 16px;
+            }
+
+            .banner-img {
+                width: 85px;
+                height: 60px;
+            }
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+        <div class="header">
+            <div class="header-content">
+
+                <div class="brand">
+                    <div class="brand-icon">&#128101;</div>
+
+                    <div>
+                        <h1>Salary<span>Manager</span></h1>
+                        <p>Sistem de gestiune a salariilor</p>
+                    </div>
+                </div>
+
+                <div class="header-widgets">
+                    <asp:UpdatePanel ID="UpdatePanelCeas" runat="server">
+                        <ContentTemplate>
+
+                            <asp:Timer
+                                ID="Timer1"
+                                runat="server"
+                                Interval="1000"
+                                OnTick="Timer1_Tick">
+                            </asp:Timer>
+
+                            <span class="clock-panel">
+                                <asp:Label
+                                    ID="lblCeas"
+                                    runat="server">
+                                </asp:Label>
+                            </span>
+
+                            <asp:Image
+                                ID="imgReclama1"
+                                runat="server"
+                                CssClass="banner-img" />
+
+                            <asp:Image
+                                ID="imgReclama2"
+                                runat="server"
+                                CssClass="banner-img" />
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+
+            </div>
+        </div>
+
+        <nav class="menu">
+
+            <a href="Home.aspx">&#8962; Home</a>
+
+            <div class="dropdown">
+                <button class="dropbtn" type="button">
+                    Introducere date &#9660;
+                </button>
+
+                <div class="dropdown-content">
+                    <a href="ActualizareDate.aspx">
+                        Actualizare date
+                    </a>
+
+                    <a href="AdaugareAngajati.aspx">
+                        Adăugare angajați
+                    </a>
+
+                    <a href="StergereAngajat.aspx">
+                        Ștergere angajați
+                    </a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" type="button">
+                    Rapoarte / Tipărire &#9660;
+                </button>
+
+                <div class="dropdown-content">
+                    <a href="GenerareStat.aspx">
+                        Stat de plată
+                    </a>
+
+                    <a href="GenerareFluturas.aspx">
+                        Fluturași salariu
+                    </a>
+                </div>
+            </div>
+
+            <a href="ModificareProcente.aspx">
+                Modificare Procente
+            </a>
+
+        </nav>
+
+        <div class="content">
+            <asp:ContentPlaceHolder
+                ID="MainContent"
+                runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+    </form>
+</body>
+</html>
